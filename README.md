@@ -31,7 +31,7 @@ It detects malicious login attempts (SQL Injection, XSS, Brute Force) and silent
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/AI-Intrusion-Detection-System.git
+git clone https://github.com/aayushchavanke/AI-Intrusion-Detection-System.git
 cd AI-Intrusion-Detection-System
 ```
 
@@ -67,10 +67,6 @@ The application will run at: **http://127.0.0.1:8000**
    - ⚠️ **Auth Fail:** Incorrect credentials → Generic error
 4. **Logging:** Attacker data is stored in `Attack_Logs.xlsx` and SQLite.
 
----
-
-## 📸 Screenshots
-*(Add your screenshots here)*
 
 ---
 
