@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RED TEAM OPS | v5.0</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #050505; color: #ff3333; font-family: 'Courier New', monospace; overflow-x: hidden; }
+        
+        /* CARD STYLING */
+        .cyber-card { 
+            background: #0f0f0f; 
+            border: 1px solid #441111; 
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.05);
+            height: 100%;
+        }
+        
+        /* THE "ARSENAL" HEADER */
+        .arsenal-header {
+            color: #ff0000;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 900;
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+            border-bottom: 2px solid #ff0000;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* ATTACK BUTTONS */
+        .btn-attack { 
+            width: 100%; margin-bottom: 8px; border-radius: 2px; 
+            font-weight: bold; padding: 12px; text-transform: uppercase; 
+            border: 1px solid #333; background: #111; color: #cc0000; 
+            transition: all 0.2s; 
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .btn-attack:hover { 
+            background: #cc0000; color: #000; 
+            box-shadow: 0 0 15px #cc0000; border-color: #cc0000;
+            transform: translateX(5px); /* Slide effect */
+        }
+        .arrow-icon { opacity: 0.5; }
+        
+        /* INPUT FIELD */
+        .target-input { 
+            background: #000; color: #00ff00; border: 1px solid #333; 
+            padding: 8px; width: 350px; text-align: center; 
+            font-family: 'Courier New', monospace; letter-spacing: 1px;
+        }
+        .target-input:focus { border-color: #00ff00; outline: none; box-shadow: 0 0 10px rgba(0, 255, 0, 0.2); }
+
+        /* LOG WINDOW */
+        .log-window { height: 450px; overflow-y: auto; background: #000; border-top: 1px solid #333; padding: 10px; font-size: 0.8rem; }
+        .data-window { height: 450px; overflow-y: auto; background: #080808; border-top: 1px solid #333; padding: 10px; color: #00ff00; font-size: 0.75rem; white-space: pre-wrap; }
+        
+        /* CUSTOM SCROLLBAR */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #331111; }
+    </style>
+</head>
+<body class="p-4">
+    <div class="container-fluid">
+        <div class="text-center mb-5">
+            <h1 class="fw-bold" style="color: #ff0000; letter-spacing: 5px; text-shadow: 0 0 15px red;">RED TEAM COMMAND</h1>
+            <div class="d-flex justify-content-center align-items-center mt-3">
+                <span class="me-3 text-secondary small">TARGET LOCK <i class="fas fa-crosshairs text-danger"></i></span>
+                <input type="text" id="targetUrl" class="target-input" value="http://127.0.0.1:8000">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card cyber-card p-3">
+                    <h6 class="arsenal-header text-center">WEAPON ARSENAL</h6>
+                    
+                    <button onclick="launchAttack('sqli')" class="btn btn-attack">
+                        <span><i class="fas fa-database me-2"></i> SQL INJECTION</span> <span class="arrow-icon">➜</span>
+                    </button>
+                    <button onclick="launchAttack('xss')" class="btn btn-attack">
+                        <span><i class="fas fa-code me-2"></i> XSS SCRIPTING</span> <span class="arrow-icon">➜</span>
+                    </button>
+                    <button onclick="launchAttack('cmdi')" class="btn btn-attack">
+                        <span><i class="fas fa-terminal me-2"></i> CMD INJECTION</span> <span class="arrow-icon">➜</span>
+                    </button>
+                    <button onclick="launchAttack('lfi')" class="btn btn-attack">
+                        <span><i class="fas fa-file-code me-2"></i> FILE INCLUSION</span> <span class="arrow-icon">➜</span>
+                    </button>
+                    <button onclick="launchAttack('rce')" class="btn btn-attack">
+                        <span><i class="fas fa-cogs me-2"></i> REMOTE EXEC</span> <span class="arrow-icon">➜</span>
+                    </button>
+                    <button onclick="launchAttack('bruteforce')" class="btn btn-attack">
+                        <span><i class="fas fa-key me-2"></i> BRUTE FORCE</span> <span class="arrow-icon">➜</span>
+                    </button>
+                    
+                    <hr class="border-secondary my-3">
+                    
+                    <button onclick="launchAttack('dos')" class="btn btn-attack" style="border-color:#fff; color:#fff;">
+                        <span><i class="fas fa-bolt me-2"></i> DoS FLOOD</span> <span class="arrow-icon">⚡</span>
+                    </button>
+                    <button onclick="launchAttack('scanner')" class="btn btn-attack" style="border-color:cyan; color:cyan;">
+                        <span><i class="fas fa-search me-2"></i> VULN SCANNER</span> <span class="arrow-icon">⦿</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="card cyber-card p-0">
+                    <div class="card-header bg-transparent border-0 text-white small p-2 ps-3">
+                        <i class="fas fa-list-ul me-2"></i> ATTACK TELEMETRY
+                    </div>
+                    <div class="log-window" id="consoleLogs">
+                        <div class="text-secondary opacity-50">// System Ready. Select a vector.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card cyber-card p-0">
+                    <div class="card-header bg-transparent border-0 text-white small p-2 ps-3">
+                        <i class="fas fa-download me-2"></i> DATA EXFILTRATION
+                    </div>
+                    <div class="data-window" id="lootWindow">
+                        <div class="text-secondary opacity-50">// No data captured yet.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // (Copy the script logic from the previous step here)
+        // ... (see previous response for the JS logic) ...
+        const lootStorage = {};
+        function log(message, type='neutral', loot='', filename='', full_data='') {
+            const box = document.getElementById('consoleLogs');
+            const time = new Date().toLocaleTimeString();
+            const id = Date.now();
+            if(full_data) lootStorage[id] = { filename: filename, data: full_data };
+            let color = type === 'success' ? 'text-success fw-bold' : (type === 'error' ? 'text-danger' : 'text-white');
+            
+            let html = `<div class="mb-1 border-bottom border-dark pb-1">
+                <span class="text-secondary me-2">[${time}]</span> <span class="${color}">${message}</span>`;
+            if(loot && full_data) {
+                html += `<div class="mt-1 ps-3" style="font-size:0.75rem;">
+                    <span class="text-warning">>> CAPTURED: ${loot}</span>
+                    <span class="ms-2" style="cursor:pointer; color:cyan; text-decoration:underline;" onclick="viewLoot(${id})">[VIEW]</span>
+                    <span class="ms-2" style="cursor:pointer; color:#00ff00; text-decoration:underline;" onclick="downloadLoot(${id})">[SAVE]</span>
+                </div>`;
+            }
+            html += `</div>`;
+            box.innerHTML += html;
+            box.scrollTop = box.scrollHeight;
+        }
+        function viewLoot(id) {
+            document.getElementById('lootWindow').innerText = ">>> DECRYPTED PACKET:\n--------------------------\n" + lootStorage[id].data; 
+        }
+        function downloadLoot(id) {
+            const content = lootStorage[id].data;
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', lootStorage[id].filename || "loot.txt");
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+        async function launchAttack(type) {
+            const target = document.getElementById('targetUrl').value;
+            log(`Initializing ${type.toUpperCase()}...`, 'neutral');
+            try {
+                const response = await fetch(`/attack/${type}`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ target: target }) });
+                const data = await response.json();
+                if(data.status.includes("SUCCESS")) log(`Target Exploited!`, 'success', data.loot_preview, data.filename, data.full_data);
+                else log(`Attack Blocked.`, 'error');
+            } catch (err) { log(`Connection Error`, 'error'); }
+        }
+    </script>
+</body>
+</html>

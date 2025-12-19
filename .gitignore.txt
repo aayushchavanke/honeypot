@@ -1,0 +1,19 @@
+# Python junk
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+
+# Database (Auto-generated)
+*.db
+*.sqlite3
+
+# Logs and Reports
+*.log
+*.xlsx
+*.csv
+
+# OS specific
+.DS_Store
+Thumbs.db

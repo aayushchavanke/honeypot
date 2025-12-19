@@ -1,0 +1,40 @@
+/* ... (Keep existing styles) ... */
+
+/* DASHBOARD HOVER EFFECTS */
+.table-soc tbody tr {
+    transition: all 0.2s ease-in-out;
+}
+.table-soc tbody tr:hover {
+    background-color: rgba(59, 130, 246, 0.1) !important;
+    transform: scale(1.005);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    z-index: 10;
+    position: relative;
+}
+
+/* NEON ARROW FOR RED TEAM */
+.neon-arrow {
+    color: #00f3ff;
+    font-weight: bold;
+    text-shadow: 0 0 5px #00f3ff;
+    transition: transform 0.2s;
+}
+
+.btn-attack:hover .neon-arrow {
+    transform: translateX(5px);
+}
+
+/* DATE PICKER STYLE */
+input[type="date"] {
+    background-color: #1e293b;
+    color: #cbd5e1;
+    border: 1px solid #3b82f6;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-family: 'Segoe UI', sans-serif;
+    outline: none;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}

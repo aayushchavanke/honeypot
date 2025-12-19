@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+scikit-learn
+pandas
+numpy
+sqlalchemy
+jinja2
+joblib
+python-multipart
+openpyxl
+faker
+requests
+flask
+colorama
+beautifulsoup4
